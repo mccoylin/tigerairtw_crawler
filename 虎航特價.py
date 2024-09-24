@@ -273,15 +273,16 @@ if __name__ == '__main__':
             billing_end = datetime.datetime.strptime(date1[1], '%Y/%m/%d').date()
             if billing_end < datetime.datetime.now().date():
                 print(f"{travel['departure']} - {travel['destination']}，開票期限 {travel['billing_date']} 已逾期，不予處理！！")
+                print('-----')
                 continue
 
             message = f'虎航好康：{travel["departure"]} - {travel["destination"]} {travel["price"]}，旅遊日期：{travel["travel_date"]}，開票日期：{travel["billing_date"]}'
             print(message)
             # line_notify(message, token="xxxxxxxxxx")        # 發送訊息到 line notify，token 要換成自己的
-            #line_notify(message)        # 發送訊息到 line notify，token 要換成自己的
+            line_notify(message)        # 發送訊息到 line notify，token 要換成自己的
             message = f'{travel["url"]}'
             print(message)
-            #line_notify(message)        # 發送訊息到 line notify
+            line_notify(message)        # 發送訊息到 line notify
             print('-----')
 
     except Exception as e:

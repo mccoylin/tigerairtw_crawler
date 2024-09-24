@@ -43,7 +43,7 @@ def line_notify(send_message : str, token:str=None):
             'message': send_message # 設定要發送的訊息
         }
 
-        # data = requests.post(line_notify_url, headers=headers, data=data)   # 使用 POST 方法
+        data = requests.post(line_notify_url, headers=headers, data=data)   # 使用 POST 方法
 
     except Exception as e:
         # 顯示錯誤訊息
