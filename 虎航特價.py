@@ -76,7 +76,7 @@ def tiger_air_tw() -> list:
                 # print(f'{key} = {value}')
                 param_dict[key] = value
 
-        # return 的真實長相
+        # return 段的真實長相
         # {return {layout:"default",data:[{pageName:af,components:[{type:a,content:   ...中間省略... 
         # ,serverRendered:aB}}          # 結尾的特徵
         # 取出 return 的資料，這裡是行程的所有資料。
@@ -84,80 +84,7 @@ def tiger_air_tw() -> list:
         result_return = return_pattern.search(journey_json)
         if not result_return:
             return None
-
-        # print(result_return.group(1))
         return_data = result_return.group(1)
-
-        # 分析資料比錯誤, 爬到的資料都是過期的 >>>
-        # trip_pattern = re.compile(r'items:\[({destination:.+)\]\}\]\}\]\}')
-        # result_trip = trip_pattern.search(return_data)
-        # if not result_trip:     # 如果沒有找到行程資料，就不用再找了
-        #     return None
-    
-        # # print(result_trip.group(1))
-        # trip_data = result_trip.group(1).replace('},', '},\n')      # 加上換行符號，這樣比較容易加工
-        # # print(trip_data)
-
-        # # 找出所有的行程資料
-        # # {destination:"大邱",travel_date:g,billing_date:j,price:V,params:"TAE"},
-        # # 其中 g, j, V , 要用 param_dict 裡面的資料取代
-        # travel_pattern = re.compile(r'{(destination:.+,travel_date:\w+,billing_date:\w+,price:.+,params:.+)},?')
-        # result_tavel = travel_pattern.findall(trip_data)
-        # if 0 == len(result_tavel):      # 如果沒有找到行程資料，就不用再找了
-        #     return None
-
-        # # print(len(result_tavel))
-
-        # # 把行程資料組合成 list[{}] 的格式
-        # travel_list = []
-        # for row in result_tavel:
-        #     row = row.replace('}', '').replace(']', '')    # 去掉多餘的符號
-        #     destination_pattern = re.compile(r'(destination):(.+),(travel_date):(\w+),(billing_date):(\w+),(price):(.+),(params):(.+)')
-        #     result_data = destination_pattern.search(row)
-        #     if not result_data:
-        #         continue        # 不符合格式，就不處理
-        #     # 組合成 dict
-        #     data_dict = {   
-        #         result_data.group(1) : result_data.group(2),
-        #         result_data.group(3) : result_data.group(4),
-        #         result_data.group(5) : result_data.group(6),
-        #         result_data.group(7) : result_data.group(8),
-        #         result_data.group(9) : result_data.group(10),
-        #     }
-        #     # 加入 list
-        #     travel_list.append(data_dict)    
-        #
-        # result_airplane = airplane_pattern.findall(found_list[0])
-        # print(f"result_airplane = {len(result_airplane)}")
-
-        # airplane_xxx_list = re.split(airplane_pattern_part, found_list[0])
-        # print(f"airplane_xxx_list = {len(airplane_xxx_list)}")
-        # print(airplane_xxx_list[0])
-        # print('-----')
-        # print(airplane_xxx_list[1])
-
-        # # print(travel_list) 
-        # # 處理行程資料裡面的 params, 如果該被取代，套用 param_dict 裡面的資料
-        # for travel in travel_list:
-        #     for key, value in travel.items():
-        #         # 如果 value 該被取代
-        #         if value in param_dict.keys():      
-        #             print(f"travel[{key}] : {value}")
-        #             # print(f"{value} = {param_dict[value]}")
-        #             travel[key] = param_dict[value]
-        #             # print(f"travel[{key}] : {travel[key]}")
-        #             # print('-----')
-
-        ## print(len(travel_list))
-
-        # return travel_list
-
-
-        # result_end_found = found_end_pattern.findall(return_data)
-        # print(f"= {len(result_end_found)}")
-
-        # 分析資料比錯誤, 爬到的資料都是過期的 <<<
-
 
         # 手動分析時，發現資料的格式是這樣的。剛好是網頁的 columns 資料，一共會出現有三個區段。符合台北，台中，高雄三個區段
         # {key:c,label:A},  A = "台北(桃園) 往"     # 出發地
