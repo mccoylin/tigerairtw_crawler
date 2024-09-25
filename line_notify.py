@@ -7,8 +7,7 @@
 
 import requests
 import os
-
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 
 '''
@@ -17,6 +16,7 @@ import os
 
 send_message : 要傳出去的文字，一定要有訊息才會傳。
 token : line notify 的權杖，如果沒有提供，就會使用預設的權杖。
+預設的權杖是從 .env 檔案中取得，所以要先建立 .env 檔案，並且在裡面寫入 LINE_TOKEN=你的權杖
 ---------------------------------
 '''
 def line_notify(send_message : str, token:str=None):
@@ -27,9 +27,9 @@ def line_notify(send_message : str, token:str=None):
 
         line_notify_url = 'https://notify-api.line.me/api/notify'
 
-        # 讀取 .env 檔案
-        # load_dotenv()
-        # line_token = os.getenv('LINE_TOKEN')
+        # 讀取 .env 檔案，用來取得 line token
+        load_dotenv()
+        line_token = os.getenv('LINE_TOKEN')
 
         if token:
             line_token = token
